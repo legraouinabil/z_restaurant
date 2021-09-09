@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Produit_Image;
+use App\Feedback;
 use Illuminate\Http\Request;
 
-class ProduitImageController extends Controller
+class FeedbackController extends Controller
 {
-    
     /**
      * Display a listing of the resource.
      *
@@ -15,15 +14,9 @@ class ProduitImageController extends Controller
      */
     public function index()
     {
-        $images = Produit_Image::all()
-        ->orderBy('id' , 'desc')
+        $feedback = Feedback::orderBy('id' , 'desc')
         ->paginate(6);
-        foreach($images as $image){
-            // $post->setAttribute('path' , '/post/'. $post->slug);
-             $image->setAttribute('produit', $image->produit);
-         
-         }
-        return response()->json($images);
+        return response()->json($feedback);
         
     }
 
@@ -45,18 +38,20 @@ class ProduitImageController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $this->validate($request,[
-            'name'=>'string|required',
-            'produit_id'=>'bail|required|exists:produits,id',
+            'nomComplete'=>'string|required',
+            'telephone'=>'string|required',
+            'feedbackText'=>'string|required',
+           
            
         ]);
-        $image = Produit_Image::create([
-            'image' => $request->image,
-            'produit_id' => $request->produit_id
-
+        $feedback = Feedback::create([
+            'nomComplete' => $request->nomComplete,
+            'telephone' => $request->telephone,
+            'feedbackText' => $request->feedbackText,
+           
         ]);
-        return response()->json($image);
+        return response()->json($feedback);
     }
 
     /**
@@ -67,8 +62,15 @@ class ProduitImageController extends Controller
      */
     public function show($id)
     {
-        $data['image']=Produit_Image::find($id);
-        return response()->json($data);
+        $feedback = Feedback::findOrFail($id);
+        return response()->json([
+            'id' => $feedback->id,
+            'nomComplete' => $feedback->nomComplete,
+            'telephone' => $feedback->telephone,
+            'feedbackText' => $feedback->feedbackText,
+            'status' => $feedback->status,
+        ]);
+
     }
 
     /**
@@ -91,21 +93,25 @@ class ProduitImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $image=Produit_Image::findOrFail($id);
-        $this->validate($request,[
-            'image'=>'string|required',
-            'produit_id'=>'bail|required|exists:produits,id',
-           
-        ]);
-        $image->update([
-            'image' => $request->image,
-            'produit_id' => $request->produit_id
-           
+        $feed = Feedback::findOrFail($id);
+            $this->validate($request,[
 
-        ]);
-        return response()->json($image);
-       
-    }
+                'status'=>'required|in:Accepted,Refused,EnTraitment'
+                 
+            ]);
+            $data=$request->all();
+            $status=$feed->fill($data)->save();
+            if($status){
+                return response()->json([
+                    $feed,
+                    'succes' => 'status update avec succes'
+                ]);
+            }
+
+           
+        }
+        
+    
 
     /**
      * Remove the specified resource from storage.
@@ -115,11 +121,10 @@ class ProduitImageController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $image=Produit_Image::findOrFail($id);
-        $image->delete();
+        $feedback=Feedback::findOrFail($id);
+        $feedback->delete();
         return response()->json([
-            'message' => 'image supprimer avec succes'
+            'message' => 'feedback supprimer avec succes'
         ]);
     }
 }

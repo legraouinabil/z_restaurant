@@ -12,8 +12,8 @@ $factory->define(Produit::class, function (Faker $faker) {
        'title' => $title, 
        'description' => $faker->paragraph,
        'price' => $faker->numberBetween($min = 10 , $max =1000),
-       'oldPrice' => $faker->numberBetween($min = 10 , $max =1000),
+       'underline_Pice' => $faker->numberBetween($min = 10 , $max =1000),
        'category_id' => $faker->numberBetween($min = 1 , $max =10),
-       'qte' => $faker->numberBetween($min = 0 , $max =100)
+      
     ];
 });

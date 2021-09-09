@@ -9,13 +9,14 @@ $factory->define(Order::class, function (Faker $faker) {
     return [
         //
 
-        'qteProduct' =>$faker->numberBetween($min=1 , $max=4),
-        'produit_id' =>5,
-        'clientName' =>$faker->name,
-        'clientTel' =>$faker->phoneNumber,
-        'clientAddresse' => $faker->address,
+        'orderCost' =>$faker->numberBetween($min=1 , $max=4),
+        'qte' =>$faker->numberBetween($min=1 , $max=4),
+        'produit_id' => $faker->numberBetween($min = 2, $max =20),
+        'nomComplet' =>$faker->name,
+        'telephone' =>$faker->phoneNumber,
+        'adressPostal' => $faker->address,
         'ville' =>$faker->city,
-        'codePostal'=>$faker->countryCode,
+       
         
     ];
 });

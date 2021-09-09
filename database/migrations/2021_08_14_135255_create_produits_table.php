@@ -20,8 +20,8 @@ class CreateProduitsTable extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
 			$table->text('description');
 			$table->integer('price')->default(10);
-            $table->integer('oldPrice')->default(10);
-            $table->integer('qte')->default(0);
+            $table->integer('underline_Pice')->default(10);
+            $table->integer('promotion')->nullable();
             $table->timestamps();
         });
     }

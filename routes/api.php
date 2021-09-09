@@ -23,23 +23,25 @@ Route::group(['middleware' => 'api'],function () {
    
 });
 
-    Route::get('category', 'CategoryController@index');
-    Route::get('produit', 'ProduitController@index');
-    Route::get('produitImage', 'ProduitImageController@index');
+   
     Route::get('logout', 'ApiController@logout');
     Route::get('logout', 'ApiController@logout');
     Route::post('login', 'ApiController@login');
     Route::post('register', 'ApiController@register');
+    Route::post('addOrder' , 'OrderController@store');
+    Route::post('addFeedback' , 'FeedbackController@store');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('logout', 'ApiController@logout');
-    Route::apiresource('category' , 'CategoryController')->except('index');
-    Route::apiresource('image' , 'ProduitImageController')->except('index');
-    Route::apiresource('produit' , 'ProduitController')->except('index');
-    Route::apiresource('order' , 'OrderController')->only('index' , 'show' ,'destroy');
+    Route::apiresource('category' , 'CategoryController');
+    Route::apiresource('image' , 'ProduitImageController');
+    Route::apiresource('produit' , 'ProduitController');
+    Route::apiresource('order' , 'OrderController')->except('store');
+    Route::apiresource('feedback' , 'FeedbackController')->except('store');
 
 });
 
+Route::get('site', 'FrontController@index');
 
 
 

@@ -11,8 +11,7 @@ $factory->define(Category::class, function (Faker $faker) {
     return [
         //
         "name" => $name,
-        "slug" => Str::slug($name),
-        "description" => $faker->paragraph
+      
 
         
     ];

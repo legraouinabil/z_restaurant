@@ -16,9 +16,9 @@ class ProduitController extends Controller
     public function index()
     {
         //
-        $produits = Produit::select('title','description','price','oldprice','qte','created_at')
-        ->take(3)
-        ->get();
+        $produits = Produit::select('title','description','price','underline_Pice','promotion','created_at')
+        ->orderBy('id' , 'desc')
+        ->paginate(6);
         foreach($produits as $produit){
            // $post->setAttribute('path' , '/post/'. $post->slug);
             $produit->setAttribute('category', $produit->category);
@@ -50,8 +50,8 @@ class ProduitController extends Controller
             'title'=>'string|required',
             'description'=>'string|required',
             'price'=>'integer|required',
-            'oldPrice'=>'string|required',
-            'qte'=>'integer|required',
+            'underline_Pice'=>'string|required',
+            'promotion'=>'integer|nullable',
             'category_id'=>'bail|required|exists:categories,id',
            
         ]);
@@ -59,8 +59,8 @@ class ProduitController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
-            'oldPrice' => $request->oldPrice,
-            'qte' => $request->qte,
+            'underline_Pice' => $request->underline_Pice,
+            'promotion' => $request->promotion,
             'category_id' => $request->category_id
         ]);
         return response()->json($prod);
@@ -80,9 +80,9 @@ class ProduitController extends Controller
             'title' => $produit->title,
             'description' => $produit->description,
             'price' => $produit->price,
-            'oldPrice' => $produit->oldPrice,
+            'underline_Pice' => $produit->underline_Pice,
             'category' =>$produit->category->name,
-            'qte' => $produit->qte,
+            'promotion' => $produit->promotion,
             'created_at' => $produit->created_at,
             'produitImages' => $produit->produitImages,
            
@@ -116,8 +116,8 @@ class ProduitController extends Controller
             'title'=>'string|required',
             'description'=>'string|required',
             'price'=>'integer|required',
-            'oldPrice'=>'string|required',
-            'qte'=>'integer|required',
+            'underline_Pice'=>'string|required',
+            'promotion'=>'integer|required',
             'category_id'=>'bail|required|exists:categories,id',
            
         ]);
@@ -125,8 +125,8 @@ class ProduitController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
-            'oldPrice' => $request->oldPrice,
-            'qte' => $request->qte,
+            'underline_Pice' => $request->underline_Pice,
+            'promotion' => $request->promotion,
             'category_id' => $request->category_id
         ]);
         return response()->json($prod);

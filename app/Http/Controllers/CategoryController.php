@@ -14,7 +14,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::all();
+        $category = Category::select( 'name')
+        ->orderBy('id' , 'desc')
+        ->paginate(6);
         return response()->json($category);
         
     }
@@ -40,14 +42,12 @@ class CategoryController extends Controller
         //
         $this->validate($request,[
             'name'=>'string|required',
-            'slug'=>'string|required',
-            'description'=>'string|required',
+           
            
         ]);
         $cat = Category::create([
             'name' => $request->name,
-            'slug' => $request->slug,
-            'description' => $request->description,
+     
 
         ]);
         return response()->json($cat);
@@ -88,14 +88,12 @@ class CategoryController extends Controller
          $category=Category::findOrFail($id);
         $this->validate($request,[
             'name'=>'string|required',
-            'slug'=>'string',
-            'description'=>'string',
+           
            
         ]);
         $category->update([
             'name' => $request->name,
-            'slug' => $request->slug,
-            'description' => $request->description,
+          
 
         ]);
         return response()->json($category);

@@ -16,8 +16,9 @@ class CreateFeedbackTable extends Migration
         Schema::create('feedback', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nomComplete');
-            $table->string('tel');
+            $table->string('telephone');
             $table->text('feedbackText');
+            $table->enum('status' , ['Accepted','Refused', 'EnTraitment'])->default('EnTraitment');
             $table->timestamps();
         });
     }

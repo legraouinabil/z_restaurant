@@ -15,15 +15,16 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('qteProduct');
+            $table->integer('orderCost')->default(0);
+            $table->integer('qte')->default(0);
             $table->unsignedBigInteger('produit_id');
             $table->foreign('produit_id')->references('id')->on('produits');
-            $table->string('clientName');
-            $table->string('clientTel');
-            $table->text('clientAddresse');
+            $table->string('nomComplet');
+            $table->string('telephone');
+            $table->text('adressPostal');
             $table->string('ville');
-            $table->string('codePostal');
-            $table->enum('status' , ['aucun','demander' , 'livrer'])->default('aucun');
+            $table->string('zipCode')->nullable();
+            $table->enum('status' , ['Livré','Annuler' , 'Confirmer' , 'EnTraitment'])->default('EnTraitment');
             $table->timestamps();
         });
     }

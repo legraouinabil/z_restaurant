@@ -8,13 +8,14 @@ class Order extends Model
 {
    
     protected $fillable = [
-        'qteProduct',
+        'qte',
         'produit_id',
-        'clientName',
-        'clientTel' ,
+        'orderCost',
+        'nomComplet',
+        'telephone' ,
         'clientAddresse',
         'ville',
-        'codePostal',
+        'adressPostal',
         'status',
         
     ];

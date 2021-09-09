@@ -14,7 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::all()
+        ->orderBy('id' , 'desc')
+        ->paginate(6);
         return response()->json($orders);
     }
 
@@ -36,7 +38,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'orderCost'=>'required',
+            'qte'=>'required',
+            'nomComplet'=>'string|required',
+            'ville'=>'string|required',
+            'zipCode'=>'required',
+            'telephone'=>'string|required',
+            'adressPostal'=>'string|nullable',
+            'produit_id'=>'bail|required|exists:produits,id',
+           
+        ]);
+        $order = Order::create([
+            'orderCost' => $request->orderCost,
+            'qte' => $request->qte,
+            'nomComplet' => $request->nomComplet,
+            'ville' => $request->ville,
+            'zipCode' => $request->zipCode,
+            'telephone' => $request->telephone,
+            'adressPostal' => $request->adressPostal,
+            'produit_id' => $request->produit_id,
+        ]);
+        return response()->json($order);
     }
 
     /**
@@ -50,14 +73,13 @@ class OrderController extends Controller
         $order = Order::find($id);
         return response()->json([
             'id' => $order->id,
-            'qteProduct' => $order->qteProduct,
-            'produit' => $order->produit->title,
-            'produitdescr' => $order->produit->description,
-            'clientName' => $order->clientName,
-            'clientTel' => $order->clientTel,
-            'clientAddresse' =>$order->clientAddresse,
+            'orderCost' => $order->orderCost,
+            'qte' => $order->qte,
+            'nomComplet' => $order->nomComplet,
+            'telephone' => $order->telephone,
+            'adressPostal' =>$order->adressPostal,
             'ville' => $order->ville,
-            'codePostal' => $order->codePostal,
+            'zipCode' => $order->zipCode,
             'status' => $order->status,
             'created_at' => $order->created_at
            
@@ -85,7 +107,23 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $this->validate($request,[
+
+            'status'=>'required|in:Livré,Annuler,Confirmer,EnTraitment',
+             
+        ]);
+        $data=$request->all();
+        $status=$order->fill($data)->save();
+        if($status){
+            return response()->json([
+                $order,
+                'succes' => 'status update avec succes'
+            ]);
+
+        }
+       
+        
     }
 
     /**

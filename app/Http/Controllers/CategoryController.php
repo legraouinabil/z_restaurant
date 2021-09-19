@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Produit;
+use Hamcrest\Core\HasToString;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -14,9 +17,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::select( 'name')
+        $category = Category::select( 'name','id')
         ->orderBy('id' , 'desc')
-        ->paginate(6);
+        ->paginate(100);
+        foreach($category as $c) {
+            $c->setAttribute('count', count($c->produits));
+        }
         return response()->json($category);
         
     }

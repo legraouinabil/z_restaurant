@@ -16,13 +16,13 @@ class ProduitController extends Controller
     public function index()
     {
         //
-        $produits = Produit::select('title','description','price','underline_Pice','promotion','created_at')
+        $produits = Produit::select(
+            'id','title','description','price','underline_Pice','promotion','category_id')
         ->orderBy('id' , 'desc')
         ->paginate(6);
         foreach($produits as $produit){
            // $post->setAttribute('path' , '/post/'. $post->slug);
             $produit->setAttribute('category', $produit->category);
-        
         }
         return response()->json($produits);
     }

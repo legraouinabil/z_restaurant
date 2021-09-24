@@ -15,7 +15,7 @@ class FeedbackController extends Controller
     public function index()
     {
         $feedback = Feedback::orderBy('id' , 'desc')
-        ->paginate(6);
+        ->get();
         return response()->json($feedback);
         
     }

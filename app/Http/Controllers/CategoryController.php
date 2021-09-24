@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
         $category = Category::select( 'name','id')
         ->orderBy('id' , 'desc')
-        ->paginate(100);
+        ->get();
         foreach($category as $c) {
             $c->setAttribute('count', count($c->produits));
         }

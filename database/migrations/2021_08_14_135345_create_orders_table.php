@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->integer('orderCost')->default(0);
             $table->integer('qte')->default(0);
             $table->unsignedBigInteger('produit_id');
-            $table->foreign('produit_id')->references('id')->on('produits');
+            $table->foreign('produit_id')->references('id')->on('produits')->onDelete('cascade');
             $table->string('nomComplet');
             $table->string('telephone');
             $table->text('adressPostal');

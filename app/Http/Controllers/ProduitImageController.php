@@ -15,14 +15,11 @@ class ProduitImageController extends Controller
      */
     public function index()
     {
-        $images = Produit_Image::all()
-        ->orderBy('id' , 'desc')
-        ->paginate(6);
-        foreach($images as $image){
-            // $post->setAttribute('path' , '/post/'. $post->slug);
-             $image->setAttribute('produit', $image->produit);
-         
-         }
+        $images = Produit_Image::all();
+        // foreach($images as $image){
+            // // $post->setAttribute('path' , '/post/'. $post->slug);
+            //  $image->setAttribute('produit', $image->produit);
+        // }
         return response()->json($images);
         
     }

@@ -19,7 +19,7 @@ class ProduitController extends Controller
         $produits = Produit::select(
             'id','title','description','price','underline_Pice','promotion','category_id')
         ->orderBy('id' , 'desc')
-        ->paginate(6);
+        ->get();
         foreach($produits as $produit){
            // $post->setAttribute('path' , '/post/'. $post->slug);
             $produit->setAttribute('category', $produit->category);

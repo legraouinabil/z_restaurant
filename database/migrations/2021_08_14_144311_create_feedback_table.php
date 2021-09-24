@@ -18,7 +18,7 @@ class CreateFeedbackTable extends Migration
             $table->string('nomComplete');
             $table->string('telephone');
             $table->text('feedbackText');
-            $table->enum('status' , ['Accepted','Refused', 'EnTraitment'])->default('EnTraitment');
+            $table->enum('status' , ['true','false'])->default('false');
             $table->timestamps();
         });
     }

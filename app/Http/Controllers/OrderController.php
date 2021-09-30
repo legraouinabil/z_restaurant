@@ -14,9 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all()
+        $orders = Order::select('id, orderCost, qte, produit_id, telephone, adressPostal, ville, zipCode, status')
         ->orderBy('id' , 'desc')
-        ->paginate(6);
+        ->get();
         return response()->json($orders);
     }
 

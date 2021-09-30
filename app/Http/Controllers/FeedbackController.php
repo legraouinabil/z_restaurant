@@ -96,7 +96,7 @@ class FeedbackController extends Controller
         $feed = Feedback::findOrFail($id);
             $this->validate($request,[
 
-                'status'=>'required|in:Accepted,Refused,EnTraitment'
+                'status'=>'required|in:true,false'
                  
             ]);
             $data=$request->all();

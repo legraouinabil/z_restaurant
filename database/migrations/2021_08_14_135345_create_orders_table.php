@@ -24,7 +24,11 @@ class CreateOrdersTable extends Migration
             $table->text('adressPostal');
             $table->string('ville');
             $table->string('zipCode')->nullable();
-            $table->enum('status' , ['Livré','Annuler' , 'Confirmer' , 'EnTraitment'])->default('EnTraitment');
+            // 0 => Commande Etat initial En traitement
+            // 1 => Commande Confirmer
+            // 2 => Commande Etat Finale Commande Livre
+            // 3 => Commande Annuler
+            $table->enum('status' , ['0', '1' , '2' , '3'])->default('0');
             $table->timestamps();
         });
     }

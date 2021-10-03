@@ -17,6 +17,7 @@ class Order extends Model
         'ville',
         'adressPostal',
         'status',
+        'zipCode',
         
     ];
 

@@ -14,9 +14,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::select('id, orderCost, qte, produit_id, telephone, adressPostal, ville, zipCode, status')
-        ->orderBy('id' , 'desc')
-        ->get();
+        $orders = Order::all();
+        // ->orderBy('id' , 'desc')
+        // ->get();
         return response()->json($orders);
     }
 
@@ -58,6 +58,7 @@ class OrderController extends Controller
             'telephone' => $request->telephone,
             'adressPostal' => $request->adressPostal,
             'produit_id' => $request->produit_id,
+            'status' => $request->status
         ]);
         return response()->json($order);
     }
@@ -110,7 +111,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $this->validate($request,[
 
-            'status'=>'required|in:Livré,Annuler,Confirmer,EnTraitment',
+            'status'=>'required|in:0,1,2,3',
              
         ]);
         $data=$request->all();

@@ -85,8 +85,6 @@ class ProduitController extends Controller
             'promotion' => $produit->promotion,
             'created_at' => $produit->created_at,
             'produitImages' => $produit->produitImages,
-           
-
         ]);
     }
 
